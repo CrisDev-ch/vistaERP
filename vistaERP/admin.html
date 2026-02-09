@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - El Rey del Huevo</title>
+    <link rel="stylesheet" href="css/admin-styles.css">
+    <script type="module" src="scripts/admin-script.js"></script>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Login Form -->
+        <div class="login-container" id="login-container">
+            <div class="login-form">
+                <h2>Iniciar Sesión - Panel Admin</h2>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="username">Usuario:</label>
+                        <input type="text" id="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Contraseña:</label>
+                        <input type="password" id="password" required>
+                    </div>
+                    <button type="submit" class="btn-login">Ingresar</button>
+                </form>
+                <p id="login-error" class="error-message"></p>
+                <div class="login-info">
+                    <p><strong>Credenciales para modo Prueba</strong></p>
+                    <p>Usuario: <code>Prueba</code></p>
+                    <p>Contraseña: <code>Prueba26</code></p>
+                    <p><em>Solo para visualización, sin permisos de edición</em></p>
+                </div>
+                <div class="form-buttons" style="margin-top: 1.5rem;">
+                    <button type="button" class="btn-cancel" id="volver-btn" onclick="window.location.href='index.html'">← Volver al Sitio</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Panel (oculto inicialmente) -->
+        <div class="admin-panel" id="admin-panel" style="display: none;">
+            <header class="admin-header">
+                <h1>Panel de Administración - El Rey del Huevo</h1>
+                <div>
+                    <button id="volver-sitio-btn" class="btn-volver">← Volver al Sitio</button>
+                    <button id="logout-btn" class="btn-logout">Cerrar Sesión</button>
+                </div>
+            </header>
+
+            <div class="admin-nav">
+                <button class="nav-btn active" data-section="productos">Gestión de Productos</button>
+                <button class="nav-btn" data-section="categorias">Gestión de Categorías</button>
+                <button class="nav-btn" data-section="publicaciones">Gestión de Publicaciones</button>
+            </div>
+
+            <div class="admin-content">
+                <!-- Sección de Productos -->
+                <div class="content-section active" id="productos-section">
+                    <h2>Gestión de Productos</h2>
+                    <button class="btn-add" id="add-producto-btn">Agregar Producto</button>
+                    
+                    <div class="form-container" id="producto-form-container" style="display: none;">
+                        <h3 id="producto-form-title">Agregar Nuevo Producto</h3>
+                        <form id="producto-form">
+                            <input type="hidden" id="producto-id">
+                            <div class="form-group">
+                                <label for="producto-nombre">Nombre:</label>
+                                <input type="text" id="producto-nombre" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="producto-descripcion">Descripción:</label>
+                                <textarea id="producto-descripcion" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="producto-precio">Precio:</label>
+                                <input type="number" id="producto-precio" step="0.01" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="producto-categoria">Categoría:</label>
+                                <select id="producto-categoria" required>
+                                    <option value="">Seleccione una categoría</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="producto-imagen-url">URL de la Imagen:</label>
+                                <input type="url" id="producto-imagen-url" placeholder="https://ejemplo.com/imagen.jpg">
+                                <div id="producto-imagen-url-preview"></div>
+                                <small class="help-text">Puedes usar servicios gratuitos como Imgur, PostImage, o placeholder.com</small>
+                            </div>
+                            <div class="form-buttons">
+                                <button type="submit" class="btn-save">Guardar</button>
+                                <button type="button" class="btn-cancel" id="cancel-producto-btn">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="table-container">
+                        <h3>Lista de Productos</h3>
+                        <div class="table-responsive">
+                            <table id="productos-table">
+                                <thead>
+                                    <tr>
+                                        <th>Imagen</th>
+                                        <th>Nombre</th>
+                                        <th>Descripción</th>
+                                        <th>Precio</th>
+                                        <th>Categoría</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="productos-tbody">
+                                    <!-- Los productos se cargarán aquí -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección de Categorías -->
+                <div class="content-section" id="categorias-section">
+                    <h2>Gestión de Categorías</h2>
+                    <button class="btn-add" id="add-categoria-btn">Agregar Categoría</button>
+                    
+                    <div class="form-container" id="categoria-form-container" style="display: none;">
+                        <h3 id="categoria-form-title">Agregar Nueva Categoría</h3>
+                        <form id="categoria-form">
+                            <input type="hidden" id="categoria-id">
+                            <div class="form-group">
+                                <label for="categoria-nombre">Nombre:</label>
+                                <input type="text" id="categoria-nombre" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="categoria-descripcion">Descripción:</label>
+                                <textarea id="categoria-descripcion" required></textarea>
+                            </div>
+                            <div class="form-buttons">
+                                <button type="submit" class="btn-save">Guardar</button>
+                                <button type="button" class="btn-cancel" id="cancel-categoria-btn">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="table-container">
+                        <h3>Lista de Categorías</h3>
+                        <div class="table-responsive">
+                            <table id="categorias-table">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Descripción</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="categorias-tbody">
+                                    <!-- Las categorías se cargarán aquí -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección de Publicaciones -->
+                <div class="content-section" id="publicaciones-section">
+                    <h2>Gestión de Publicaciones</h2>
+                    <button class="btn-add" id="add-publicacion-btn">Crear Publicación</button>
+                    
+                    <div class="form-container" id="publicacion-form-container" style="display: none;">
+                        <h3 id="publicacion-form-title">Crear Nueva Publicación</h3>
+                        <form id="publicacion-form">
+                            <input type="hidden" id="publicacion-id">
+                            <div class="form-group">
+                                <label for="publicacion-titulo">Título:</label>
+                                <input type="text" id="publicacion-titulo" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="publicacion-contenido">Contenido:</label>
+                                <textarea id="publicacion-contenido" rows="10" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="publicacion-imagen-url">URL de la Imagen:</label>
+                                <input type="url" id="publicacion-imagen-url" placeholder="https://ejemplo.com/imagen.jpg">
+                                <div id="publicacion-imagen-url-preview"></div>
+                                <small class="help-text">Puedes usar servicios gratuitos como Imgur, PostImage, o placeholder.com</small>
+                            </div>
+                            <div class="form-buttons">
+                                <button type="submit" class="btn-save">Publicar</button>
+                                <button type="button" class="btn-cancel" id="cancel-publicacion-btn">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="table-container">
+                        <h3>Lista de Publicaciones</h3>
+                        <div class="table-responsive">
+                            <table id="publicaciones-table">
+                                <thead>
+                                    <tr>
+                                        <th>Título</th>
+                                        <th>Contenido</th>
+                                        <th>Fecha</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="publicaciones-tbody">
+                                    <!-- Las publicaciones se cargarán aquí -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
